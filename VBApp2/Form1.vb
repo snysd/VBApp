@@ -1,4 +1,5 @@
-﻿Imports MySql.Data.MySqlClient
+﻿Imports Microsoft.VisualBasic.FileIO
+Imports MySql.Data.MySqlClient
 Imports System.Data
 
 Public Class Form1
@@ -13,16 +14,16 @@ Public Class Form1
                                         + ";User Id=" + DB_Id _
                                         + ";Password=" + DB_Pw _
                                         + ";sqlservermode=True;")
+    Private Sub Insert_Query(name As String, gender As String, age As String)
+        Dim query As String = $"INSERT INTO memberlist VALUES ('{name}','{gender}',{age})"
+        Dim cmd As MySqlCommand = New MySqlCommand(query, Conn)
+        cmd.ExecuteNonQuery()
+    End Sub
     Private Sub ButtonInsert_Click(sender As Object, e As EventArgs) Handles ButtonInsert.Click
         Dim name As String = Me.TextBoxName.Text
         Dim age As String = Me.TextBoxAge.Text
         Dim gender As String = Me.TextBoxGender.Text
-
-        Dim query As String = $"INSERT INTO memberlist VALUES ('{name}','{gender}',{age})"
-        Dim cmd As MySqlCommand = New MySqlCommand(query, Conn)
-        cmd.ExecuteNonQuery()
-
-
+        Insert_Query(name, gender, age)
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -53,7 +54,7 @@ Public Class Form1
 
         'はじめのファイル名を指定する
         'はじめに「ファイル名」で表示される文字列を指定する
-        ofd.FileName = "default.html"
+        ofd.FileName = "default.csv"
         'はじめに表示されるフォルダを指定する
         '指定しない（空の文字列）の時は、現在のディレクトリが表示される
         ofd.InitialDirectory = "C:\"
@@ -76,8 +77,19 @@ Public Class Form1
 
         'ダイアログを表示する
         If ofd.ShowDialog() = DialogResult.OK Then
-            'OKボタンがクリックされたとき、選択されたファイル名を表示する
-            Console.WriteLine(ofd.FileName)
+            Dim parser As New TextFieldParser(ofd.FileName, System.Text.Encoding.GetEncoding("UTF-8"))
+            parser.TextFieldType = FieldType.Delimited
+            parser.SetDelimiters(",") ' 区切り文字はコンマ
+            Dim cnt As Integer = 0
+            While Not parser.EndOfData
+                cnt = cnt + 1
+                Dim row As String() = parser.ReadFields() ' 1行読み込み
+                If cnt = 1 Then
+                    Continue While
+                End If
+                Insert_Query(row(0), row(1), row(2))
+                ' 配列rowの要素は読み込んだ行の各フィールドの値
+            End While
         End If
     End Sub
 End Class
