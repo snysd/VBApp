@@ -48,6 +48,36 @@ Public Class Form1
     End Sub
 
     Private Sub ButtonFileInsert_Click(sender As Object, e As EventArgs) Handles ButtonFileInsert.Click
+        'OpenFileDialogクラスのインスタンスを作成
+        Dim ofd As New OpenFileDialog()
 
+        'はじめのファイル名を指定する
+        'はじめに「ファイル名」で表示される文字列を指定する
+        ofd.FileName = "default.html"
+        'はじめに表示されるフォルダを指定する
+        '指定しない（空の文字列）の時は、現在のディレクトリが表示される
+        ofd.InitialDirectory = "C:\"
+        '[ファイルの種類]に表示される選択肢を指定する
+        '指定しないとすべてのファイルが表示される
+        ofd.Filter = "CSV Files (*.csv)|*.csv"
+        '[ファイルの種類]ではじめに選択されるものを指定する
+        '2番目の「すべてのファイル」が選択されているようにする
+        ofd.FilterIndex = 2
+        'タイトルを設定する
+        ofd.Title = "開くファイルを選択してください"
+        'ダイアログボックスを閉じる前に現在のディレクトリを復元するようにする
+        ofd.RestoreDirectory = True
+        '存在しないファイルの名前が指定されたとき警告を表示する
+        'デフォルトでTrueなので指定する必要はない
+        ofd.CheckFileExists = True
+        '存在しないパスが指定されたとき警告を表示する
+        'デフォルトでTrueなので指定する必要はない
+        ofd.CheckPathExists = True
+
+        'ダイアログを表示する
+        If ofd.ShowDialog() = DialogResult.OK Then
+            'OKボタンがクリックされたとき、選択されたファイル名を表示する
+            Console.WriteLine(ofd.FileName)
+        End If
     End Sub
 End Class
