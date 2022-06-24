@@ -39,13 +39,7 @@ Public Class Form1
     End Sub
 
     Private Sub ListBoxDB_MouseEnter(sender As Object, e As EventArgs)
-        Conn.Close()
-        Conn.Open()
-        Dim query As String = "SELECT * FROM memberlist;"
-        Dim cmd As MySqlCommand = New MySqlCommand(query, Conn)
-        Dim dr As MySqlDataReader = cmd.ExecuteReader()
-        Dim dt As DataTable = New DataTable()
-        dt.Load(dr)
+
     End Sub
 
     Private Sub ButtonFileInsert_Click(sender As Object, e As EventArgs) Handles ButtonFileInsert.Click
@@ -91,5 +85,26 @@ Public Class Form1
                 ' 配列rowの要素は読み込んだ行の各フィールドの値
             End While
         End If
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Conn.Close()
+        Conn.Open()
+        Dim query As String = "SELECT * FROM memberlist;"
+        Dim cmd As MySqlCommand = New MySqlCommand(query, Conn)
+        Dim dr As MySqlDataReader = cmd.ExecuteReader()
+
+        '再表示はテキストを手動で消してボタンを押下する
+        If RichTextBox1.Text IsNot "" Then
+            Exit Sub
+        End If
+
+        If dr.HasRows Then
+            While dr.Read()
+                RichTextBox1.Text += dr("name") & "," + dr("gender") & "," & dr("age").ToString & vbCrLf
+            End While
+        End If
+        dr.Close()
+        cmd.Dispose()
     End Sub
 End Class

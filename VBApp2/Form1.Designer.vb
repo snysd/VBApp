@@ -30,6 +30,8 @@ Partial Class Form1
         Me.Label3 = New System.Windows.Forms.Label()
         Me.ButtonInsert = New System.Windows.Forms.Button()
         Me.ButtonFileInsert = New System.Windows.Forms.Button()
+        Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'Label1
@@ -106,11 +108,31 @@ Partial Class Form1
         Me.ButtonFileInsert.Text = "File Insert"
         Me.ButtonFileInsert.UseVisualStyleBackColor = True
         '
+        'RichTextBox1
+        '
+        Me.RichTextBox1.Location = New System.Drawing.Point(30, 300)
+        Me.RichTextBox1.Name = "RichTextBox1"
+        Me.RichTextBox1.Size = New System.Drawing.Size(511, 143)
+        Me.RichTextBox1.TabIndex = 9
+        Me.RichTextBox1.Text = ""
+        '
+        'Button1
+        '
+        Me.Button1.Font = New System.Drawing.Font("MS UI Gothic", 13.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Button1.Location = New System.Drawing.Point(590, 345)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(150, 42)
+        Me.Button1.TabIndex = 10
+        Me.Button1.Text = "Display List"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(832, 448)
+        Me.ClientSize = New System.Drawing.Size(833, 548)
+        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.RichTextBox1)
         Me.Controls.Add(Me.ButtonFileInsert)
         Me.Controls.Add(Me.ButtonInsert)
         Me.Controls.Add(Me.TextBoxGender)
@@ -134,4 +156,6 @@ Partial Class Form1
     Friend WithEvents Label3 As Label
     Friend WithEvents ButtonInsert As Button
     Friend WithEvents ButtonFileInsert As Button
+    Friend WithEvents RichTextBox1 As RichTextBox
+    Friend WithEvents Button1 As Button
 End Class
